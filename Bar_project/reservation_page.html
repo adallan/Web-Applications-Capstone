@@ -1,0 +1,262 @@
+<html>
+	<head>
+		<style>
+			body {background-color: #CAFEFF;}
+			h1 {font-family: Georgia, 'Times New Roman', Times, serif; text-align: center;}
+			p {font-size: 1.25em; font-family: Georgia, 'Times New Roman', Times, serif; text-align: center; background-color: #00E1E4}
+			ul {list-style-type: square; }
+			ul ul {list-style-type: none;}
+			.main {font-family: Georgia, 'Times New Roman', Times, serif; font-size: 2em; font-style: bold; }
+			.sub {font-family: Georgia, 'Times New Roman', Times, serif; font-size: 1.75em; font-style: oblique;}
+			.BackButton{font-family: Georgia, 'Times New Roman', Times, serif; background-color:transparent;border-style:solid; border-radius:7px;font-size:40px; color: black; text-decoration: none;}
+			.SignInButton{font-family: Georgia, 'Times New Roman', Times, serif; background-color:transparent;border-style:solid; border-radius:7px;font-size:40px;border-color:black;text-align:right;}
+			.reserve{font-family: Georgia, 'Times New Roman', Times, serif; font-size: 1.5em; font-style: bold; color: blue; cursor: pointer; text-decoration: none;}
+			.event_form {font-size: 1em; font-family: Georgia, 'Times New Roman', Times, serif;text-align: left; background-color: #CAFEFF; border-style: ridge; border-color: #00E1E4; border-width: 0.25em; padding: 2%;}
+			.calc_message {font-size: 1em; font-family: Georgia, 'Times New Roman', Times, serif; text-align: left; background-color: #CAFEFF;}
+		</style>
+		
+		<script>
+			//Loads signin or singout button when the page loads
+			window.onload = function () {
+			if (localStorage.getItem("SignedIn") == "1"){
+				document.getElementById("SignUp").style.display = "none";//if thing is 1 then wont display
+			}
+			else {
+				//if 1 will display
+				document.getElementById("SignOut").style.display = "none";
+			}
+			}
+			//Back button to return to main page
+			function Back(){
+				window.location.href = "Main_Website.html"
+			}
+			//Used in the onclick of the signin button to send you to the signin page
+			function Sign(){
+				window.location.href = "Sign_In.html"
+			}
+			//Removes signin button to be replaced with signout
+			function UndoSign(){
+				localStorage.clear();//clears and then reloades storage
+				location.reload();
+			}
+			//Function makes appropriate event form display based on which is clicked and removes any previous displays for events 
+			function event_form(div_id){
+				if (div_id == "Birthdays"){
+					document.getElementById("Birthdays").style.display ="block";
+					//Turns display off for other forms incase they were open
+					document.getElementById("Retirement").style.display ="none";
+					document.getElementById("Company").style.display ="none";
+					//resets messages and button incase same event is clicked a second time
+					document.getElementById("total_message_bday").innerHTML = "";
+					document.getElementById("perGuest_message_bday").innerHTML = "";
+					document.getElementById("calculate_bday").style.display ="block";
+				}
+				else if (div_id == "Retirement"){
+					document.getElementById("Retirement").style.display ="block";
+					document.getElementById("Birthdays").style.display ="none";
+					document.getElementById("Company").style.display ="none";
+					document.getElementById("total_message_retire").innerHTML = "";
+					document.getElementById("perGuest_message_retire").innerHTML = "";
+					document.getElementById("calculate_retire").style.display ="block";
+				}
+				else if (div_id == "Company"){
+					document.getElementById("Company").style.display ="block";
+					document.getElementById("Birthdays").style.display ="none";
+					document.getElementById("Retirement").style.display ="none";
+					document.getElementById("total_message_company").innerHTML = "";
+					document.getElementById("perGuest_message_company").innerHTML = "";
+					document.getElementById("calculate_company").style.display ="block";
+				}
+			}
+			//Calculate the approximate price of events based on number of guests and which checkboxes are checked off
+			function event_calculation(id){
+				if (id == "bday"){
+					let total = "";
+					let cost_per_guest = "";
+					//removes display of the calculate button after initial press
+					document.getElementById("calculate_bday").style.display ="none";
+					let num_guest = document.getElementById("bday_numPpl").value;
+					let cake_check = "";
+					if (document.getElementById("cake_check_bday").checked == true){
+						cake_check = 10;
+					}
+					else {
+						cake_check = 0;
+					}
+					//variable calculates and reassignments
+					total = (num_guest*25)+cake_check;
+					cost_per_guest = total/num_guest;
+					//display messages
+					document.getElementById("total_message_bday").innerHTML = "The total aproximate cost would be: $" + total;
+					document.getElementById("perGuest_message_bday").innerHTML = "The cost per person would be: $" + cost_per_guest.toFixed(2);
+				}
+				else if (id == "retire"){
+					let total = "";
+					let cost_per_guest = "";
+					document.getElementById("calculate_retire").style.display ="none";
+					let num_guest = document.getElementById("retire_numPpl").value;
+					let cake_check = "";
+					let age_discount = "";
+					if (document.getElementById("cake_check_retire").checked == true){
+						cake_check = 10;
+					}
+					else {
+						cake_check = 0;
+					}
+					if (document.getElementById("age_check").checked == true){
+						age_check = 0.85;
+					}
+					else {
+						age_check = 1;
+					}
+					total = (num_guest*25+cake_check)*age_check;
+					cost_per_guest = total/num_guest;
+					document.getElementById("total_message_retire").innerHTML = "The total aproximate cost would be: $" + total;
+					document.getElementById("perGuest_message_retire").innerHTML = "The cost per person would be: $" + cost_per_guest.toFixed(2);
+				}
+				else if (id == "company"){
+					let total = "";
+					let cost_per_guest = "";
+					document.getElementById("calculate_company").style.display ="none";
+					let num_guest = document.getElementById("company_numPpl").value;
+					let catering_check = "";
+					let buyout = "";
+					if (document.getElementById("buyout_check").checked == true){
+						buyout = 2000;
+					}
+					else {
+						buyout = 0;
+					}
+					if (document.getElementById("catering_check").checked == true){
+						catering_check = 50;
+						total = (num_guest*catering_check)+buyout;
+					}
+					else {
+						catering_check = 0;
+						total = (num_guest*25)+buyout;
+					}
+					cost_per_guest = total/num_guest;
+					document.getElementById("total_message_company").innerHTML = "The total aproximate cost would be: $" + total;
+					document.getElementById("perGuest_message_company").innerHTML = "The cost per person would be: $" + cost_per_guest.toFixed(2);
+				}
+			}
+		</script>
+		
+		<p>
+			<!--buttons for signin, signout and back, in head so they appear at the very top of the page-->
+			<a class = "BackButton" href="#" onclick = "Back(); return false;"style = "color:black;text-decoration:none;">Back</a>
+			<a class = "SignInButton" href="#" id = "SignUp" onclick = "Sign(); return false;"style = "color:black;text-decoration:none;">Sign In</a>
+			<a class = "SignInButton" href="#" id = "SignOut" onclick = "UndoSign(); return false;"style = "color:black;text-decoration:none;">Sign out</a>
+		</p>
+		<br>
+		<title> Reservations and Events </title>
+		
+	</head>
+	<body>
+		<h1> Event and Reservation Options </h1>
+		<ul>
+			<li class="main"> Reservations </li>
+			<ul>
+				<li  class="sub"> Parties of 1 to 6 </li>
+					<hr>
+					<p> Walk-ins of this party size are welcome.<br>
+					<!--This opens the user's default email software-->
+					<a class="reserve" href="mailto:TheBar@gmail.com"> Reserve Now </a>
+					</p>
+				<li  class="sub"> Parties of 6 to 12 </li>
+				<hr>
+					<p> Please reserve ahead of time, as seating for this size is limited.<br> 
+					<a class="reserve" href="mailto:TheBar@gmail.com"> Reserve Now </a>
+					</p>
+				<li  class="sub"> Parties of 14 or more </li>
+				<hr>
+					<p> Please reserve ahead of time so we can make proper arrangements for your party. <br> <span> Auto-grat 18% of the total bill applicable to parties of this size </span> 
+					<br>
+					<a class="reserve" href="mailto:TheBar@gmail.com"> Reserve Now </a>
+					</p>
+				<li  class="sub"> Restraunt buy-outs </li>
+				<hr>
+					<p> Please <a class="reserve" href="mailto:TheBar@gmail.com"> Email us </a> to get in contact with a manager to arrange details 
+					</p>
+			</ul>
+			<li class="main"> Events </li>
+			<ul>
+				<li class="sub"> Birthdays </li>
+				<hr>
+					<!--U?ses function to make birthday event form appear and makes cursor show its clickable-->
+					<p onclick="event_form('Birthdays')" style="cursor:pointer"> Come celebrate that special day with us!<br> Option for staff to sing, and a complimentary dessert for the birthday guest. <br>
+					<span> Option to bring cake in for a $10 cake-cutting charge </span>
+					</p> 
+				<div id="Birthdays" style="display: none;" class="event_form">
+					<li>
+						<!-- The event form which is defaulted to display none until event_form function is exectued-->
+						<form id="Birthday_form"> 
+							Please enter the name for the reservation:
+							<input type="text" id="bday_name"/>
+							<br>
+							How many guest?: 
+							<input type="text" id="bday_numPpl"/>
+							<br>
+							Will you be bringing a cake?
+							<input type="checkbox" id="cake_check_bday" />
+							<hr>
+							<!-- Button which triggers the calculations and message assignments-->
+							<input type="button" id="calculate_bday" value="Calculate" display="block" onclick="event_calculation('bday')"/>
+							<!-- Calculation messages that will be apllied here using .innerhtml-->
+							<p id="total_message_bday" class="calc_message"> </p>
+							<p id="perGuest_message_bday" class="calc_message"> </p>
+						</form>
+					</li>
+				</div>
+				<li class="sub"> Retirement Celebrations </li>
+				<hr>
+					<p onclick="event_form('Retirement')" style="cursor:pointer"> Options for buy-outs and large-sized parties. <br> Catering options and cake cutting
+					</p>
+				<div id="Retirement" style="display: none;" class="event_form">
+					<li>
+						<form id="Retirement_form"> 
+							Please enter the contact email:
+							<input type="text" id="retire_name"/>
+							<br>
+							How many guest?: 
+							<input type="text" id="retire_numPpl"/>
+							<br>
+							Will you be bringing a cake?
+							<input type="checkbox" id="cake_check_retire" />
+							Will the majority of the guests be over 60?
+							<input type="checkbox" id="age_check" />
+							<hr>
+							<input type="button" id="calculate_retire" value="Calculate" display="block" onclick="event_calculation('retire')"/>
+							<p id="total_message_retire" class="calc_message"> </p>
+							<p id="perGuest_message_retire" class="calc_message"> </p>
+						</form>
+					</li>
+				</div>
+				<li class="sub"> Company functions </li>
+				<hr>
+					<p onclick="event_form('Company')" style="cursor:pointer"> Large-sized groups welcome! <br> Options for restaurant buy-outs, catering and drink socials
+					</p>
+				<div id="Company" style="display: none;" class="event_form">
+					<li>
+						<form id="Company_form">
+							Please enter the company contact email:
+							<input type="text" id="company_name"/>
+							<br>
+							How many guest?:
+							<input type="text" id="company_numPpl"/>
+							<br>
+							Will you be using our catering option?
+							<input type="checkbox" id="catering_check" />
+							Will you be renting out the restaurant?
+							<input type="checkbox" id="buyout_check" />
+							<hr>
+							<input type="button" id="calculate_company" value="Calculate" display="block" onclick="event_calculation('company')"/>
+							<p id="total_message_company" class="calc_message"> </p>
+							<p id="perGuest_message_company" class="calc_message"> </p>
+						</form>
+					</li>
+				</div>
+			</ul>
+		</ul>
+	</body>
+</html>

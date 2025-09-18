@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <style>
+            
+            .Title{font-family:Georgia, 'Times New Roman', Times, serif;font-size:40px;text-align:center;color:black;background-color:aqua;}
+            p.Information{font-family:Georgia, 'Times New Roman', Times, serif;color:black;font-size:1.5em;}
+            .SubmitButton{font-family:Georgia, 'Times New Roman', Times, serif;color:black;background-color:transparent;font-size: 2em;}
+            form {border: 6px; border-color:white;padding:30px;background-color:white;}
+            body {background-color:#CAFEFF;border-color:aqua;}
+            .FeedBackArea{font-family:Georgia, 'Times New Roman', Times, serif;font-size:1.5em;width:100%;height: 100%}
+        </style>
+        <script>
+            
+            function SignInConfirm(){
+                event.preventDefault();
+                
+                var Name = document.getElementById("Name").value.trim();//the trim thing makes it so gets rid of spaces
+                var Email = document.getElementById("Email").value.trim();
+                if (Name.length > 0 || Email.length > 0)//if name or email has no letters in it then it wont work
+                {
+                    localStorage.setItem("SignedIn","1");//makes sign in have 1 in local storage so it will remember if user signed in
+                window.location.href = "Main_Website.html";
+                }
+                else{
+                    alert("Please enter a name and email");
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <p class = "Title"><b>Sign In</b></p>
+        <br>
+        <form>
+            <p class = "Information">Name:<br>
+            <input type = "text" name = "Name" size = "105" maxlength = "50" id = "Name" class="FeedBackArea"/>
+            </p>
+            <p class = "Information">Email:<br>
+            <input type = "email" name = "Email" size = "105" maxlength = "50" id = "Email" class="FeedBackArea"/>
+            </p>
+            <br>
+            <input type = "submit" class = "SubmitButton" value = "Submit" onclick="SignInConfirm(event)"/>
+        </form>    
+        
+    </body>
+
+</html>

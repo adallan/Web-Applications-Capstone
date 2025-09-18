@@ -1,0 +1,275 @@
+<html>
+	<head>
+		<title> Bar and Grill Full Menu </title>
+		<style>
+			table {border-width: thick; padding: 0.75em; margin: 0.5em; border-style: outset; font-family: Georgia, 'Times New Roman', Times, serif; font-size: 2em; background-color: #CAFEFF; text-align: center;}
+			caption { font-style: bold; font-size: 2em; font-family: Georgia, 'Times New Roman', Times, serif; background-color: #00E1E4; border-style: groove;}
+			h1 {text-align: center; font-size: 3em;}
+			.descript {font-style: italic; font-size: 1em}
+			.catergory {font-size: 1.5em; font-style: oblique; background-color: #00E1E4; border: none;}
+			.blank {border: none; background-color: #CAFEFF;}
+			.imagecell {padding:0; width:100px ; height: 100px;}
+			.imagesize {width: 100%; height: 100%; object-fit: cover;}
+			.online_order {font-style: bold; font-size: 2em; font-family: Georgia, 'Times New Roman', Times, serif; text-align: center; border-style: outset; border-color: #00E1E4; cursor: pointer;}
+			.form_box {font-size: 16px; width: 20%; height: 4%;}
+			.BackButton{font-family: Georgia, 'Times New Roman', Times, serif; background-color:transparent;border-style:solid; border-radius:7px;font-size:40px; color: black; text-decoration: none;}
+			.SignInButton{font-family: Georgia, 'Times New Roman', Times, serif; background-color:transparent;border-style:solid; border-radius:7px;font-size:40px;border-color:black;text-align:right;}
+		</style>
+		<script>
+			//Makes the order form display after onclick
+			function open_order_form() {
+				document.getElementById("order_form").style.display ="block"
+			}
+			//Turns off the oder forms display and sets message to blank
+			function close_form() {
+				document.getElementById("order_form").style.display ="none"
+				document.getElementById("confirm_message").innerHTML = ""
+			}
+			//Calculation function for the order form
+			function cost_calc() {
+				var item_1 = document.getElementById("item1").value;
+				var quantity_1 = document.getElementById("quantity1").value;
+				var item_2 = document.getElementById("item2").value;
+				var quantity_2 = document.getElementById("quantity2").value;
+				var item_3 = document.getElementById("item3").value;
+				var quantity_3 = document.getElementById("quantity3").value;
+				document.getElementById("total_cost").value = 
+				(item_1 * quantity_1) +
+				(item_2 * quantity_2) +
+				(item_3 * quantity_3);
+			}
+			//After confirm button is pressed executes the close_form function after 3 seconds
+			function confirmation(){
+					document.getElementById("confirm_message").innerHTML = "Order Confirmed! Closing in 3 seconds";
+					//default pre-made function
+					setTimeout(close_form,3000);
+			}
+			//Displays signin or signout button on page loading
+			window.onload = function () {
+			if (localStorage.getItem("SignedIn") == "1"){
+				document.getElementById("SignUp").style.display = "none";//if thing is 1 then wont display
+			}
+			else {
+				document.getElementById("SignOut").style.display = "none";// if 1 will display
+			}
+			}
+			//Function for back button
+			function Back(){
+				window.location.href = "Main_Website.html"
+			}
+			//On click function for signin button
+			function Sign(){
+				window.location.href = "Sign_In.html"
+			}
+			//Removes signin button
+			function UndoSign(){
+				localStorage.clear();//clears and then reloades storage
+				location.reload();
+			}
+		</script>
+	</head>
+	<body>
+		<p>
+			<!--This is back button and sign in button in head to make appear at very top of page-->
+			<a class = "BackButton" href="#" onclick = "Back(); return false;">
+			Back
+			</a>
+			<a class = "SignInButton" href="#" id = "SignUp" onclick = "Sign(); return false;"style = "color:black;text-decoration:none;">Sign In</a>
+			<a class = "SignInButton" href="#" id = "SignOut" onclick = "UndoSign(); return false;"style = "color:black;text-decoration:none;">Sign out</a>
+			
+		</p>
+		<br>
+		<br>
+		<!-- Makes the online order form appear-->
+		<p class="online_order" onclick="open_order_form()"> Place an online order! </p>
+		<div id="order_form" style="display: none;">
+			<form class="online_order">
+				<!-- Closes the form by making it's display=none-->
+				<input type="button" value="X" onclick="close_form()"/>
+				<br> Name: <br>
+				<input type="text" name="name" size="50%" class="form_box">
+				<br> Delivery Address: <br>
+				<input type="text" name="address" size="50%" class="form_box">
+				<br> What would you like to order? <br><br>
+				<!-- Makes table align to center-->
+				<table style="margin: 0 auto;">
+				<tr>
+					<td>
+					<!-- Uses values to calculate order cost, no tax is considered-->
+					<select name="item1" id="item1" onclick="cost_calc()">
+						<option value="14.19"> Wings </option>
+						<option value="8.99"> Soup </option>
+						<option value="11.88"> Calimari </option>
+						<option value="24.25"> Hamburger </option>
+						<option value="21.99"> Chicken Sandwich </option>
+						<option value="25.33"> Fish and Chips </option>
+					</select>
+					</td>
+					<td>
+					<select name="quantity1" id="quantity1" onclick="cost_calc()">
+						<option value="1"> 1 </option>
+						<option value="2"> 2 </option>
+						<option value="3"> 3 </option>
+						<option value="4"> 4 </option>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					<select name="item2" id="item2" onclick="cost_calc()">
+						<option value="0"> Nothing </option>
+						<option value="14.19"> Wings </option>
+						<option value="8.99"> Soup </option>
+						<option value="11.88"> Calimari </option>
+						<option value="24.25"> Hamburger </option>
+						<option value="21.99"> Chicken Sandwich </option>
+						<option value="25.33"> Fish and Chips </option>
+					</select>
+					</td>
+					<td>
+					<select name="quantity2" id="quantity2" onclick="cost_calc()">
+						<option value="0"> 0 </option>
+						<option value="1"> 1 </option>
+						<option value="2"> 2 </option>
+						<option value="3"> 3 </option>
+						<option value="4"> 4 </option>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					<select name="item3" id="item3" onclick="cost_calc()">
+						<option value="0"> Nothing </option>
+						<option value="14.19"> Wings </option>
+						<option value="8.99"> Soup </option>
+						<option value="11.88"> Calimari </option>
+						<option value="24.25"> Hamburger </option>
+						<option value="21.99"> Chicken Sandwich </option>
+						<option value="25.33"> Fish and Chips </option>
+					</select>
+					<td>
+					<select name="quantity3" id="quantity3" onclick="cost_calc()">
+						<option value="0"> 0 </option>
+						<option value="1"> 1 </option>
+						<option value="2"> 2 </option>
+						<option value="3"> 3 </option>
+						<option value="4"> 4 </option>
+					</select>
+					</td>
+				</tr>
+				</table>
+				<!-- Placeholder for confirm message -->
+				<p id="confirm_message"></p>
+				<br> Total Cost: <br>
+				<input type="text" id="total_cost" readonly/>
+				<!-- Changes cost when moused over so the onclick can properly close the form after 3 seconds-->
+				<input type="button" id="confirm_button" value="Confirm" onmouseover="cost_calc()" onclick="confirmation()" style="cursor: pointer;"/>
+			</form>
+		</div>
+		<hr>
+		<table border="border" cellpadding="10" cellspacing="10">
+			<!-- Big menu table-->
+			<caption> Bar and Grill Menu </caption
+			<tr>
+				<th class="blank"> </th>
+				<th class="blank"> </th>
+				<th class="catergory"> Appetizers </th>
+				<th class="blank"> </th>
+			</tr>
+			<tr> 
+				<td> Wings </td>
+				<!-- Uses a styled cell so the class for the image will scale to 100% of the specified cell-->
+				<td class="imagecell"><img src="images/wings.jpg" alt="Photo of chicken wings" class="imagesize"> </td>
+				<td class="descript"> One pound of fried chicken wings served with celery sticks. <br> Choice of flavours; hot, bbq or honey garlic </td>
+				<td id="wing_price"> $14.19 </td>
+			</tr>
+			<tr> 
+				<td> Daily Soup </td>
+				<!-- All site images are contained within the same folder for convience-->
+				<td class="imagecell"><img src="images/soup.jpeg" alt="Photo of chicken soup" class="imagesize"> </td>
+				<td class="descript"> Daily made soup, served with garlic toast. Ask you're server for more details </td>
+				<td> $8.99 </td>
+			</tr>
+			<tr> 
+				<td> Calimari </td>
+				<td class="imagecell"><img src="images/cali.jpg" alt="Photo of fried squid" class="imagesize"> </td>
+				<td class="descript"> Breaded fried squid served with house made tzatiki </td>
+				<td> $11.88 </td>
+			</tr>
+			<tr>
+				<th class="blank"> </th>
+				<th class="blank"> </th>
+				<th class="catergory"> Entrees </th>
+				<th class="blank"> </th>
+			</tr>
+			<tr> 
+				<td> Hamburger </td>
+				<td class="imagecell"><img src="images/burger.jpg" alt="Photo of a cheeseburger" class="imagesize"> </td>
+				<td class="descript"> Ground beef patty with cheese on a potato bun, with lettuce, tomato and pickles </td>
+				<td> $24.25 </td>
+			</tr>
+			<tr> 
+				<td> Chicken Sandwich </td>
+				<td class="imagecell"><img src="images/chickensando.jpg" alt="Photo of fried chicken sandwich" class="imagesize"> </td>
+				<td class="descript"> Fried Chicken thigh on a potato bun, with lettuce, tomato and pickles </td>
+				<td> $21.99 </td>
+			</tr>
+			<tr> 
+				<td> Fish and Chips </td>
+				<td class="imagecell"><img src="images/fishchips.jpg" alt="Photo of two peices of fish with fries" class="imagesize"> </td>
+				<td class="descript"> Two pieces of beer-battered cod, with coleslaw and house-made French fries </td>
+				<td> $25.33 </td>
+			</tr>
+			<tr>
+				<th class="blank"> </th>
+				<th class="blank"> </th>
+				<th class="catergory"> Beverages </th>
+				<th class="blank"> </th>
+			</tr>
+			<tr> 
+				<td> Beer </td>
+				<td class="imagecell"><img src="images/beer.jpg" alt="Photo of a beer" class="imagesize"> </td>
+				<td class="descript"> 16oz of Local brewery's lager </td>
+				<td> $5.75 </td>
+			</tr>
+			<tr> 
+				<td> Cocktail </td>
+				<td class="imagecell"><img src="images/mojito.jpg" alt="Photo of a mojito" class="imagesize"> </td>
+				<td class="descript"> 10oz House made mojitio </td>
+				<td> $11.99 </td>
+			</tr>
+			<tr> 
+				<td> Wine </td>
+				<td class="imagecell"><img src="images/wine.jpg" alt="Photo of red wine" class="imagesize"> </td>
+				<td class="descript"> 10oz Red or white wine </td>
+				<td> $7.89 </td>
+			</tr>
+			<tr> 
+				<td> Soda </td>
+				<td class="imagecell"><img src="images/soda.jpeg" alt="Photo of a cola" class="imagesize"> </td>
+				<td class="descript"> Unlimited refills of 16oz sodas. <br> Choice of Coke, Sprite or Gingerale </td>
+				<td> $2.25 </td>
+			</tr>
+			<tr>
+				<th class="blank"> </th>
+				<th class="blank"> </th>
+				<th class="catergory"> Desserts </th>
+				<th class="blank"> </th>
+			</tr>
+			<tr> 
+				<td> Creme Brulee </td>
+				<td class="imagecell"><img src="images/brulee.jpg" alt="Photo of creme brulee" class="imagesize"> </td>
+				<td class="descript"> House-made custard with torched sugar </td>
+				<td> $9.99 </td>
+			</tr>
+			<tr> 
+				<td> Chocolate Cake </td>
+				<td class="imagecell"><img src="images/cake.jpg" alt="Photo of chocolate cake with ice cream" class="imagesize"> </td>
+				<td class="descript"> Slice of chocolate cake served with a scoop of vanilla ice cream </td>
+				<td> $11.05 </td>
+			</tr>
+		</table>
+		<br>
+		<hr>
+	</body>
+<html>

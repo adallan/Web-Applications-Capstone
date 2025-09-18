@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <style>
+            
+            .Title{font-family:Georgia, 'Times New Roman', Times, serif;background-color:black;font-size:3vw;text-align:center;color:white;border-style:solid;border-color:black;}
+            .BackgroundImage{background-image:url(images/Bar.JPG);background-size:cover;background-position:center;height:100vh}/*made bar image cover page better here*/
+            body{border: 20px solid black;margin:0;padding:0;height:100%;border-bottom-color:black; background-color:black;}
+            .BlackBackground{background-color:black;text-align:center;}
+            h1.Welcome{font-family:Impact, 'Arial Narrow Bold', sans-serif; color:white;font-size:10vw;text-align:center;}/*lots of fonts and centering and sizing here*/
+            p.links a {font-family:Lucida, Courier, monospace;text-decoration:underline;font-size:2vw;text-align:center;margin-right:60px;color:white;}
+            p.home a {font-family:Lucida, Courier, monospace;text-decoration:underline;font-size:2vw;text-align:center;margin-right:60px;color:lightskyblue;}
+            p.links {text-align:center;}
+            .TableCenter{margin-left:auto;margin-right:auto;}
+            .SignInButton{font-family: Georgia, 'Times New Roman', Times, serif; background-color:white;border-style:solid; border-radius:7px;font-size:40px;border-color:black;text-align:right;background-color:white}/*sign in button styling*/
+            .SignInArea{position:fixed;top:10px;right:10px;}
+
+        </style>
+        <script>
+            function Info(){
+                window.location.href = "Information.html"
+            }
+            function Menu(){
+                window.location.href = "menu_page.html"
+            }
+            function Reserve(){
+                window.location.href = "reservation_page.html"
+            }
+            
+            function Home(){
+                window.location.href = "Main_Website.html"
+            }
+            function Sign(){
+				window.location.href = "Sign_In.html"
+				
+			}
+			function UndoSign(){
+				localStorage.clear();//clears and then reloades storage
+				location.reload();
+			}
+			window.onload = function() {
+			if (localStorage.getItem("SignedIn") == "1"){
+				document.getElementById("SignUp").style.display = "none";
+			}
+			else {
+				document.getElementById("SignOut").style.display = "none";// if 1 will display
+			}
+			}
+                  
+           
+        </script>
+    </head>
+    <body>
+        <div class = "SignInArea">
+        <a class = "SignInButton" href="#" id = "SignUp" onclick = "Sign(); return false;"style = "color:black;text-decoration:none;">Sign In</a>
+	    <a class = "SignInButton" href="#" id = "SignOut" onclick = "UndoSign(); return false;"style = "color:black;text-decoration:none;">Sign Out</a>
+        </div>
+        <div class = "BackgroundImage"><p class = "BlackBackground">
+            
+        <span class = "Title"><b>Bar and Grill Restaurant</b></span>
+        </p><br><br><br>
+        <p class = "links">
+        <span class = "home"><a href="#" onclick = "Home(); return false;" style="color:lightskyblue;">Home</a></span>
+        <a href="#" onclick = "Menu(); return false;">Menu</a><!--the return false stops page from reloading or jumping to new page-->
+        <a href="#" onclick = "Reserve(); return false;">Reservations</a>
+        <a href = "#" onclick = "Info(); return false;">Restaurant Info</a>
+        
+        
+
+        </p>
+        <br><br><br>
+        <h1 class = "Welcome">Welcome</h1>
+        </div>
+        <br>
+        <br>
+         <table class="TableCenter">
+            <tr>
+                <th>
+                    <img src = "images/ContactImage.png" style = "border-radius:10px;">
+
+                </th>
+                <th style = "color:white">
+                    Phone: +1 (234) 567-8910<br>
+                     Email: TheBar@gmail.com<br>
+                
+                </th>
+            </tr>
+         </table>
+    </body>
+</html>

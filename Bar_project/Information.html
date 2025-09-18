@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <style>
+            .TopBar{position:fixed;top:0;left:0;width:100%;background-color:black;text-align:center;}
+            .SignInButton{font-family: 'Georgia'; background-color:white;border-style:solid; border-radius:7px;font-size:40px;border-color:black;text-align:right;background-color:white;z-index:1000;}/*sign in button styling also z index stops stacking*/
+            .SignInArea{position:fixed;top:10px;right:10px;}
+            .BackgroundImage{background-image:url(images/GoodLookingBurger.JPG);background-size:cover;background-position:center;height:100vh}/*made bar image cover page better here*/
+            body{border: 20px solid black;margin:0;padding:0;height:100%;border-bottom-color:black; background-color:black;}
+            p.text {font-family:Lucida, Courier, monospace;font-size:2vw;text-align:center;color:white;}
+            .Button{font-family: 'Georgia'; background-color:transparent;border-style:solid; border-radius:7px;font-size:40px;border-color:cyan;text-align:right; align-items:center;display:block;width:fit-content;margin: 0 auto;}
+            .BiggerButton{font-family: 'Georgia'; background-color:transparent;border-style:solid; border-radius:7px;font-size:3em;border-color:cyan;text-align:left; align-items:center;display:block;width:fit-content;margin: 0 auto;color:white}
+            .BackButton{font-family: 'Georgia'; background-color:white;border-style:solid; border-radius:7px;font-size:40px; color: black; text-decoration: none;z-index:1000;}
+            .BackArea{position:fixed;top:10px;left:10px;}
+        </style>
+
+    </head>
+    <body>
+        <script>
+            function Back(){
+				window.location.href = "Main_Website.html"
+			}
+            function Menu(){
+                window.location.href = "menu_page.html"
+            }
+             function Sign(){
+				window.location.href = "Sign_In.html"
+				
+			}
+            function UndoSign(){
+				localStorage.clear();//clears and then reloades storage
+				location.reload();
+			}
+            window.onload = function() {
+			if (localStorage.getItem("SignedIn") == "1"){
+				document.getElementById("SignUp").style.display = "none";//if thing is 1 then wont display
+			}
+			else {
+				document.getElementById("SignOut").style.display = "none";// if 1 will display
+			}
+             localStorage.setItem("x", "1");//making x equal 1 for drop down menu
+			}
+            function DropDown(){
+                var j = localStorage.getItem("x")
+                if(j == 1){
+                    document.getElementById("info").innerHTML = "Location and Hours -<span style = 'font-size:0.5em' !important;><br><br>Open all days<br>3:00pm - Midnight<br>Located at 123 Main Street, Downtown</span>"
+                    localStorage.setItem("x", "0");
+                }
+                else{
+                    document.getElementById("info").innerHTML = "Location and Hours +"
+                    localStorage.setItem("x", "1");
+                }
+            
+            }
+
+        </script>
+        
+        <div class = "TopBar"><p class = "text">Bar and Grill Restaurant</p></div>
+        <div class = "BackArea"><a class = "BackButton" href="#" onclick = "Back(); return false;">Back</a></div>
+        <div class = "SignInArea">
+        <a class = "SignInButton" href="#" id = "SignUp" onclick = "Sign(); return false;"style = "color:black;text-decoration:none;">Sign In</a>
+	    <a class = "SignInButton" href="#" id = "SignOut" onclick = "UndoSign(); return false;"style = "color:black;text-decoration:none;">Sign Out</a>
+        </div>
+         <div class = "BackgroundImage">
+            <p class = "text"><br><br><br><br><br><br><br><br>Come check out our menu</p>
+            
+                <a class = "Button" href="#" id = "menu" onclick = "Menu(); return false;"style = "color:white;text-decoration:none;">Menu</a><!--placeholder click it to activate function-->
+            
+
+
+         </div>
+         <p class = "text">Welcome to Bar and Grill, a cozy,
+             family-owned bar that’s been pouring cold drinks and
+              serving good vibes since 1998. Nestled in the heart of the city,
+             we’re more than just a bar — we’re a local hangout where friends become family.
+             <br><br>
+            </p>
+            <button type="button" onclick="DropDown()" style="cursor:pointer" class ="BiggerButton"><p id = "info">
+                Location and Hours +
+            </p></button>
+            
+            
+
+    </body>
+</html>
